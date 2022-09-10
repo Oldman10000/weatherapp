@@ -30,12 +30,15 @@ class WeatherController extends Controller
         // if the ip address is in the request we need to get the weather data
         if ($requestIp) {
             // check if the ip exists in the ip address table
-            $checker = IpAddress::where('name', '=', $requestIp)->first();
+            $ipAddress = IpAddress::where('name', '=', $requestIp)->first();
 
             // if not, then we add it!
-            if (!$checker) {
-                $ipAddress = new IpAddress();
-                $ipAddress->name = $requestIp;
+            if (!$ipAddress) {
+                $ipAddress = $this->storeIpAddress($requestIp);
+            } elseif (!$ipAddress->location_data) {
+                // if the ip address has no location data we need to add it
+                $locationData = $this->getLocationData($requestIp);
+                $ipAddress->location_data = $locationData;
                 $ipAddress->save();
             }
 
@@ -55,8 +58,13 @@ class WeatherController extends Controller
 
             // there is no data from today so we have to create a new one using the api
             if (!$weatherReport) {
+                $locationData = json_decode($ipAddress->location_data);
+                $locationKey = $locationData->Key;
                 // we store the weather data in its own table
-                $weatherReport = $this->storeWeatherReport($requestIp);
+                $weatherReport = $this->storeWeatherReport(
+                    $ipAddress,
+                    $locationKey
+                );
             }
 
             // now we redirect to weather view which shows weather data
@@ -83,41 +91,51 @@ class WeatherController extends Controller
         // turn json weather data into php array
         $weatherData = json_decode($weatherReport->weather_data);
 
+        $ipAddress = IpAddress::find($weatherReport->ip_address_id);
+        $locationData = json_decode($ipAddress->location_data);
+
         $parameters = [
             'weatherData' => $weatherData,
+            'locationData' => $locationData,
         ];
 
         return view('weather::weather', $parameters);
     }
 
-    public function storeWeatherReport($requestIp)
+    public function storeIpAddress($requestIp)
+    {
+        $locationData = $this->getLocationData($requestIp);
+
+        $ipAddress = new IpAddress();
+        $ipAddress->name = $requestIp;
+        $ipAddress->location_data = $locationData;
+        $ipAddress->save();
+
+        return $ipAddress;
+    }
+
+    public function storeWeatherReport($ipAddress, $locationKey)
     {
         // get the json formatted weather data from the accuweather api
-        $weatherData = $this->getWeatherData($requestIp);
+        $weatherData = $this->getWeatherData($locationKey);
 
         // add new weather report to database adding the ip address and weather data
         $weatherReport = new WeatherReport();
-        $weatherReport->ip_address_id = IpAddress::where(
-            'name',
-            '=',
-            $requestIp
-        )->first()->id;
+        $weatherReport->ip_address_id = $ipAddress->id;
         $weatherReport->weather_data = $weatherData;
         $weatherReport->save();
 
         return $weatherReport;
     }
 
-    public function getWeatherData($ipAddress)
+    public function getLocationData($requestIp)
     {
-        // need to call the weather api twice, once to retrieve the location key using the ip address
-        // then again using the location key to retrieve the weather data
-
+        // use the ip address to get the ip address json data which includes the location key used to get the weather data
         $url =
             'http://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=' .
             self::ACCUWEATHER_API_KEY .
             '&q=' .
-            $ipAddress .
+            $requestIp .
             '&details=true';
 
         $curl = curl_init();
@@ -126,11 +144,12 @@ class WeatherController extends Controller
         $result = curl_exec($curl);
         curl_close($curl);
 
-        $result = json_decode($result);
+        return $result;
+    }
 
-        $locationKey = $result->Details->CanonicalLocationKey;
-
-        // now we have the location key we get the actual weather data
+    public function getWeatherData($locationKey)
+    {
+        // get weather data using the location key
 
         $url =
             'http://dataservice.accuweather.com/forecasts/v1/daily/5day/' .

@@ -5,7 +5,7 @@
 
         <h2>Your 5 day weather forecast</h2>
 
-        @dump($weatherData)
+        @dump($weatherData, $locationData)
 
     </div>
 @endsection
