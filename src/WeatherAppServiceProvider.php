@@ -16,7 +16,6 @@ class WeatherAppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->make('Oldman10000\WeatherApp\WeatherController');
-        $this->loadViewsFrom(__DIR__ . '/views', 'weather');
     }
 
     /**
@@ -26,24 +25,60 @@ class WeatherAppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        include __DIR__ . '/routes.php';
-
-        $this->publishes(
-            [
-                __DIR__ . '/public' => public_path(''),
-            ],
-            'public'
-        );
+        $this->handleMigrations();
+        $this->handleViews();
+        $this->handleRoutes();
+        $this->handlePublic();
 
         // Register the command if we are using the application via the CLI
         if ($this->app->runningInConsole()) {
             $this->commands([CreateIpAddresses::class]);
         }
 
-        $this->loadRoutesFrom(__DIR__ . '/routes.php');
+        $this->loadViewsFrom(__DIR__ . '/views', 'weather-app');
+    }
 
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [];
+    }
+
+    private function handleViews()
+    {
+        $this->loadViewsFrom(__DIR__ . '/views', 'weather-app');
+
+        $this->publishes([
+            __DIR__ . '/views' => base_path('resources/views'),
+        ]);
+    }
+
+    private function handleRoutes()
+    {
+        include __DIR__ . '/routes.php';
+    }
+
+    private function handleMigrations()
+    {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => public_path(
+                'database/migrations'
+            ),
+        ]);
+    }
 
-        $this->loadViewsFrom(__DIR__ . '/../views', 'weather-app');
+    private function handlePublic()
+    {
+        $this->publishes(
+            [
+                __DIR__ . '/public' => public_path(''),
+            ],
+            'public'
+        );
     }
 }
