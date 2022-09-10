@@ -34,8 +34,6 @@ class WeatherAppServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([CreateIpAddresses::class]);
         }
-
-        $this->loadViewsFrom(__DIR__ . '/views', 'weather-app');
     }
 
     /**
@@ -59,7 +57,10 @@ class WeatherAppServiceProvider extends ServiceProvider
 
     private function handleRoutes()
     {
-        include __DIR__ . '/routes.php';
+        $this->loadRoutesFrom(__DIR__ . '/weather-routes.php');
+        $this->publishes([
+            __DIR__ . 'weather-routes.php' => base_path('routes'),
+        ]);
     }
 
     private function handleMigrations()
