@@ -83,7 +83,7 @@ class WeatherController extends Controller
             'headerText' => $headerText,
         ];
 
-        return view('weather::index', $parameters);
+        return view('weather-app::index', $parameters);
     }
 
     public function show($weatherReportId)
@@ -109,7 +109,7 @@ class WeatherController extends Controller
             'headerText' => $headerText,
         ];
 
-        return view('weather::weather', $parameters);
+        return view('weather-app::weather', $parameters);
     }
 
     public function storeIpAddress($requestIp)

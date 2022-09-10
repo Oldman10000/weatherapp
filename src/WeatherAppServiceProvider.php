@@ -57,12 +57,7 @@ class WeatherAppServiceProvider extends ServiceProvider
 
     private function handleRoutes()
     {
-        $this->loadRoutesFrom(__DIR__ . '/weather-routes.php');
-        $this->publishes([
-            __DIR__ . '/weather-routes.php' => base_path(
-                'routes/weather-routes.php'
-            ),
-        ]);
+        $this->loadRoutesFrom(__DIR__ . '/weather-routes.php', 'weather-app');
     }
 
     private function handleMigrations()
