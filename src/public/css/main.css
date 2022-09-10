@@ -1,0 +1,25 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header, footer {
+    padding: 20px;
+}
+
+h1, footer p {
+    margin: 0 auto;
+}
+
+main {}
+
+.content {
+    display: grid;
+    place-content: center;
+}
