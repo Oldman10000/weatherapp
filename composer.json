@@ -7,8 +7,7 @@
       "Oldman10000\\WeatherApp\\": "src/"
     },
     "classmap": [
-      "database",
-      "packages/.../database/migrations"
+      "database"
     ]
   },
   "authors": [
