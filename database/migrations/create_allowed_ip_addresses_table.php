@@ -4,10 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use Oldman10000\WeatherApp\Models\IpAddress;
-
-class CreateWeatherReportTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -15,10 +12,10 @@ class CreateWeatherReportTable extends Migration
      */
     public function up()
     {
-        Schema::create('weather_report', function (Blueprint $table) {
+        Schema::create('allowed_ip_addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(IpAddress::class);
-            $table->jsonb('weather_data');
+            $table->string('name');
+            $table->jsonb('location_data');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateWeatherReportTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('weather_report');
+        Schema::dropIfExists('allowed_ip_addresses');
     }
-}
+};
