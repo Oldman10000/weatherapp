@@ -1,22 +1,22 @@
 {
-    "name": "oldman10000/weather-app",
-    "description": "Gets 5 day weather forecast for a guest identified only by IP address",
-    "type": "project",
-    "autoload": {
-        "psr-4": {
-            "Oldman10000\\WeatherApp\\": "src/"
-        },
-        "classmap": [
-            "database",
-            "packages/.../src/migrations"
-        ]
+  "name": "oldman10000/weather-app",
+  "description": "Gets 5 day weather forecast for a guest identified only by IP address",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Oldman10000\\WeatherApp\\": "src/"
     },
-    "authors": [
-        {
-            "name": "oldman10000",
-            "email": "patrickoldman1993@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {}
+    "classmap": [
+      "database",
+      "packages/.../database/migrations"
+    ]
+  },
+  "authors": [
+    {
+      "name": "oldman10000",
+      "email": "patrickoldman1993@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {}
 }
