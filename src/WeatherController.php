@@ -74,10 +74,13 @@ class WeatherController extends Controller
         // get all ip addresses in database to use as form options
         $ipAddresses = IpAddress::all();
 
+        $headerText = 'Get your 5 day weather report using your Ip Address';
+
         $parameters = [
             'ipAddresses' => $ipAddresses,
             'requestIp' => $requestIp,
             'clientIp' => $clientIp,
+            'headerText' => $headerText,
         ];
 
         return view('weather::index', $parameters);
@@ -94,9 +97,16 @@ class WeatherController extends Controller
         $ipAddress = IpAddress::find($weatherReport->ip_address_id);
         $locationData = json_decode($ipAddress->location_data);
 
+        $headerText =
+            'Your 5 day weather forecast in ' .
+            $locationData->EnglishName .
+            ', ' .
+            $locationData->Country->EnglishName;
+
         $parameters = [
             'weatherData' => $weatherData,
             'locationData' => $locationData,
+            'headerText' => $headerText,
         ];
 
         return view('weather::weather', $parameters);

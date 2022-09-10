@@ -1,25 +1,113 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
+    margin-bottom: 0 0 20px;
+    padding: 25px;
+}
+
+header, footer {
+    display: flex;
+    justify-content: center;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+    overflow: hidden;
+}
+
+h1 {
+    text-align: center;
+}
+
+.home__link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 2em;
+    color: black;
+}
+
+.content {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+    grid-gap: 25px;
+}
+
+form input[type="text"] {
+    align-self: flex-start;
+    width: 300px;
+    height: 50px;
+    font-size: 30px;
+}
+
+form input[type="submit"] {
+    align-self: flex-start;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: black;
+    color: white;
+}
+
+.content h2 {
+    text-align: center;
+}
+
+.weather__data {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 40px;
+}
+
+.weather__data__day {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.75);
+    padding: 10px;
 }
 
-header, footer {
-    padding: 20px;
+.weather__data__day__date {
+    font-size: 1.3em;
+    text-align: center;
 }
 
-h1, footer p {
-    margin: 0 auto;
-}
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.4em;
+    }
 
-main {}
+    h2 {
+        font-size: 1.1em;
+    }
 
-.content {
-    display: grid;
-    place-content: center;
+    .content {
+        padding: 0;
+    }
 }
