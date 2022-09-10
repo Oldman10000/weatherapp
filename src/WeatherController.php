@@ -17,7 +17,7 @@ class WeatherController extends Controller
     // it can be a class constant
     const ACCUWEATHER_API_KEY = 'Lw1JN6Ug100suJAtqvTMJpeM1FlooHl3';
 
-    public function index($weatherReport = null)
+    public function index()
     {
         // get user ip to prefill form field
         // note that in dev environment this will just be localhost / 127.0.0.1

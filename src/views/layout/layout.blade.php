@@ -21,7 +21,7 @@
 
 <body>
     <header>
-        <nav><a class="home__link" href="/"><i class="fa-solid fa-house"></i></a></nav>
+        <nav><a class="home__link" href="/weather"><i class="fa-solid fa-house"></i></a></nav>
         <h1>{{ $headerText }}</h1>
     </header>
     <main>

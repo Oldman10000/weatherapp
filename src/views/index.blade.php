@@ -3,7 +3,7 @@
 @section('content')
     <div class="content">
 
-        <form action="/" method="POST">
+        <form action="/weather" method="POST">
             @csrf
             <label for="ip">Enter your Ip address below</label>
             <input type="text" name="ip" value="{{ $clientIp }}">
