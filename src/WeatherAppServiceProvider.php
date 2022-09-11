@@ -32,7 +32,7 @@ class WeatherAppServiceProvider extends ServiceProvider
 
         // Register the command if we are using the application via the CLI
         if ($this->app->runningInConsole()) {
-            $this->commands([CreateIpAddresses::class]);
+            $this->commands([CreateIpAddresses::class, GetWeatherData::class]);
         }
     }
 
