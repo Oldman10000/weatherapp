@@ -58,7 +58,7 @@ Get weather data for your ip address directly in the CLI with
 
 ## Improvements
 
-- There is no form validation for the main IP Address form field. The result is that if an invalid IP address is entered, the API returns location data for Ashburn, VA, USA. It would therefore be nice to add some kind of validation for API addresses to do this. There is likely a php package that does this which may be worth researching.
+- There is no form validation for the main IP Address form field. The result is that if an invalid IP address is entered, the API returns location data for Ashburn, VA, USA, which is likely the default or first value in their data. It would actually be more useful to us if an error were to be returned in this case rather than to receive incorrect data. It would therefore be nice to add some kind of validation for API addresses to throw an error. There is likely a php package that does this which may be worth researching.
 
 - I noticed that the days returned by the API were sometimes incorrect, which appears to be due to the timezone. The result in the screenshot below was fetched from the API on the 11th September, however as can be seen the first date shown is the 10th September. The AccuWeather API collects weather data only a couple of times a day, once in the morning and once in the evening so it appears at the time that the API collected the data, it was still the 10th September locally (in the UK) but the 11th September in St Lucia as it is GMT+10 over there.
 
