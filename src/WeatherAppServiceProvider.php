@@ -5,6 +5,7 @@ namespace Oldman10000\WeatherApp;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 use Oldman10000\WeatherApp\Console\createIpAddresses;
+use Oldman10000\WeatherApp\Console\GetWeatherData;
 
 class WeatherAppServiceProvider extends ServiceProvider
 {
