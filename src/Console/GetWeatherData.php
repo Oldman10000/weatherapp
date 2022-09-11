@@ -83,9 +83,18 @@ class GetWeatherData extends Command
             );
         }
 
+        $locationData = json_decode($ipAddress->location_data);
+
+        'Your 5 day weather forecast in ' .
+            $locationData->EnglishName .
+            ', ' .
+            $locationData->Country->EnglishName;
+
         $weatherData = json_decode($weatherReport->weather_data);
 
-        echo('Headline - ' . $weatherData->Headline->Text . ' ' . date('j F, Y', strtotime($weatherData->Headline->EffectiveDate)) . PHP_EOL);
+        echo('Weather for ' . $locationData->EnglishName . ', ' .
+             $locationData->Country->EnglishName . PHP_EOL .
+             $weatherData->Headline->Text . ' ' . date('j F, Y', strtotime($weatherData->Headline->EffectiveDate)) . PHP_EOL);
 
         foreach ($weatherData->DailyForecasts as $forecast) {
             $date = date('j F, Y', strtotime($forecast->Date));
