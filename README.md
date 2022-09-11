@@ -52,6 +52,10 @@ It is possible to add IP addresses to the database using the following command:
 
 `php artisan create:insert-ipaddresses {ip address}`
 
+Get weather data for your ip address directly in the CLI with
+
+`php artisan get:weather-data {ip-address}`
+
 ## Improvements
 
 - I noticed that the days returned by the API were sometimes incorrect, which appears to be due to the timezone. The result in the screenshot below was fetched from the API on the 11th September, however as can be seen the first date shown is the 10th September. The AccuWeather API collects weather data only a couple of times a day, once in the morning and once in the evening so it appears at the time that the API collected the data, it was still the 10th September locally (in the UK) but the 11th September in St Lucia as it is GMT+10 over there.
