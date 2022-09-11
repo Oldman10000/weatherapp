@@ -6,7 +6,7 @@ Use your IP address to retrieve a simple 5 day weather forecast using AccuWeathe
 
 Enter the below command in your project directory.
 
-`composer require oldman10000/weather-app:^1.0`
+`composer require oldman10000/weather-app:^1.0.*`
 
 This will install the package in your vendor directory.
 
